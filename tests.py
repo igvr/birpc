@@ -1,16 +1,16 @@
 import unittest
 import asyncio
-from rpc_websocket import RPCWebSocket
+from birpc import BIRPC
 from rich.console import Console
 
 console = Console()
 
 
-class TestRPCWebSocket(unittest.IsolatedAsyncioTestCase):
+class TestBIRPC(unittest.IsolatedAsyncioTestCase):
     async def test_local_method_registration_and_call(self):
         try:
             console.print("🚀 [bold green]Starting server...")
-            server = RPCWebSocket("server", "localhost", 9000)
+            server = BIRPC("server", "localhost", 9000)
 
             def local_method(arg1, arg2):
                 return arg1 * arg2
@@ -19,9 +19,7 @@ class TestRPCWebSocket(unittest.IsolatedAsyncioTestCase):
             server_task = asyncio.create_task(server.start())
 
             console.print("🚀 [bold green]Starting client...")
-            client = RPCWebSocket(
-                "client", "localhost", 9000, reconnect_interval=1, timeout=2
-            )
+            client = BIRPC("client", "localhost", 9000, reconnect_interval=1, timeout=2)
             client_task = asyncio.create_task(client.start())
 
             await asyncio.sleep(
@@ -47,7 +45,7 @@ class TestRPCWebSocket(unittest.IsolatedAsyncioTestCase):
     async def test_error_handling(self):
         try:
             console.print("🚀 [bold green]Starting server...")
-            server = RPCWebSocket("server", "localhost", 9002)
+            server = BIRPC("server", "localhost", 9002)
 
             def error_method(arg1, arg2):
                 raise ValueError("An error occurred")
@@ -56,9 +54,7 @@ class TestRPCWebSocket(unittest.IsolatedAsyncioTestCase):
             server_task = asyncio.create_task(server.start())
 
             console.print("🚀 [bold green]Starting client...")
-            client = RPCWebSocket(
-                "client", "localhost", 9002, reconnect_interval=1, timeout=2
-            )
+            client = BIRPC("client", "localhost", 9002, reconnect_interval=1, timeout=2)
             client_task = asyncio.create_task(client.start())
 
             await asyncio.sleep(
@@ -89,7 +85,7 @@ class TestRPCWebSocket(unittest.IsolatedAsyncioTestCase):
     async def test_timeout(self):
         try:
             console.print("🚀 [bold green]Starting server with slow method...")
-            server = RPCWebSocket("server", "localhost", 9001)
+            server = BIRPC("server", "localhost", 9001)
 
             async def slow_method(arg1, arg2):
                 await asyncio.sleep(2)
@@ -99,9 +95,7 @@ class TestRPCWebSocket(unittest.IsolatedAsyncioTestCase):
             server_task = asyncio.create_task(server.start())
 
             console.print("🚀 [bold green]Starting client...")
-            client = RPCWebSocket(
-                "client", "localhost", 9001, reconnect_interval=1, timeout=1
-            )
+            client = BIRPC("client", "localhost", 9001, reconnect_interval=1, timeout=1)
             client_task = asyncio.create_task(client.start())
 
             await asyncio.sleep(
