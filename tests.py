@@ -28,7 +28,7 @@ class TestBIRPC(unittest.IsolatedAsyncioTestCase):
 
             console.print("🔍 [bold yellow]Sending RPC request...")
             with console.status("[bold yellow]Processing RPC request..."):
-                result = await client.send_rpc_request("local_method", 5, 6)
+                result = await client.call("local_method", 5, 6)
 
             console.print("🎯 [bold cyan]Result: ", result)
             self.assertEqual(result, 30)
@@ -66,7 +66,7 @@ class TestBIRPC(unittest.IsolatedAsyncioTestCase):
                 "[bold yellow]Processing RPC request with error method..."
             ):
                 try:
-                    result = await client.send_rpc_request("error_method", 5, 6)
+                    result = await client.call("error_method", 5, 6)
                 except Exception as e:
                     # console.print("❌ [bold red]Error: ", str(e))
                     self.assertEqual(str(e), "An error occurred")
@@ -104,7 +104,7 @@ class TestBIRPC(unittest.IsolatedAsyncioTestCase):
 
             console.print("🔍 [bold yellow]Sending RPC request with timeout...")
             with self.assertRaises(Exception):
-                result = await client.send_rpc_request("slow_method", 5, 6)
+                result = await client.call("slow_method", 5, 6)
             console.print("⏰ [bold green]Timeout occurred")
 
         except Exception as e:

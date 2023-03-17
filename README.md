@@ -48,7 +48,7 @@ async def main():
 
     await client.start()
 
-    result = await client.send_rpc_request("local_method", 5, 6)
+    result = await client.call("local_method", 5, 6)
     print("Result:", result)
 
 asyncio.run(main())
@@ -70,7 +70,7 @@ async def main():
     await client.start()
 
     try:
-        result = await client.send_rpc_request("local_method", 5, 6)
+        result = await client.call("local_method", 5, 6)
         print("Result:", result)
     except Exception as e:
         print(f"Error: {e}")

@@ -144,7 +144,7 @@ class RPCWebSocket:
         else:
             logger.warning(f"⚠️ Unknown method requested: {method_name}")
 
-    async def send_rpc_request(self, method, *args):
+    async def call(self, method, *args):
         uid = str(uuid.uuid4())[:16]
         request = {"m": method, "a": args, "i": uid, "t": "q"}
         logger.info(
