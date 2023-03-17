@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+birpc/__init__.py
+birpc/birpc.py
+birpc.egg-info/PKG-INFO
+birpc.egg-info/SOURCES.txt
+birpc.egg-info/dependency_links.txt
+birpc.egg-info/requires.txt
+birpc.egg-info/top_level.txt
